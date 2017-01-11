@@ -13,6 +13,9 @@ let server = http.createServer(function (req, res) {
   // IMPORTANT: Your application HAS to respond to GET /health with status 200
   //            for OpenShift health monitoring
 
+  var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+      ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || 'localhost',
+
   if (url == '/health') {
     res.writeHead(200);
     res.end();
@@ -33,6 +36,6 @@ let server = http.createServer(function (req, res) {
   }
 });
 
-server.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function () {
+server.listen(port, ip, function () {
   console.log(`Application worker ${process.pid} started...`);
 });
